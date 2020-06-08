@@ -13,7 +13,30 @@ const testData = {
   timeSec: [0.425, 0.098, 0.052, 0.686, 0.066, 0.078, 0.070, 0.375, 0.058, 0.136,
             0.052, 0.063, 0.183, 0.087, 0.066, 0.558, 0.066, 0.068, 0.610, 0.057]
 };
-console.log(testData.timeSec);
+console.log(testData.timeSec); //Muestra datos ingresados manualmente por consola
 console.log(testData.sizeMB);
+console.log(trainData.sizeMB);
+console.log(trainData.timeSec);
+
+// Convirtiendo datos a tensores:
+const trainTensors = {
+  sizeMB: tf.tensor2d(trainData.sizeMB, [20, 1]),
+  timeSec: tf.tensor2d(trainData.timeSec, [20, 1])
+};
+const testTensors = {
+  sizeMB: tf.tensor2d(testData.sizeMB, [20, 1]),
+  timeSec: tf.tensor2d(testData.timeSec, [20, 1])  
+}
+ const model = tf.sequential();
+ model.add(tf.layers.dense({inputShape: [1] , units: 1}));
+ model.compile({optimizer: 'sgd', loss: 'meanAbsoluteError'});
+ 
+(async function() {
+  await model.fit(trainTensors.sizeMB,
+                  trainTensors.timeSec,
+                  {epochs: 10});
+                  })();
+model.evaluate(testTensors.sizeMB, testTensors.timeSec);
+model.predict(tf.tensor2d([[7.8]])).print();
 </script>
 
