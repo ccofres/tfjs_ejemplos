@@ -34,9 +34,13 @@ const testTensors = {
 (async function() {
   await model.fit(trainTensors.sizeMB,
                   trainTensors.timeSec,
-                  {epochs: 10});
+                  {epochs: 100});
                   })();
-model.evaluate(testTensors.sizeMB, testTensors.timeSec);
-model.predict(tf.tensor2d([[7.8]])).print();
+model.evaluate(testTensors.sizeMB, testTensors.timeSec).print();
+
+const smallFileMB = 1;
+const bigFileMB = 100;
+const hugeFileMB = 10000;
+model.predict(tf.tensor2d([[smallFileMB],[bigFileMB],[hugeFileMB]])).print();
 </script>
 
