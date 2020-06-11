@@ -36,7 +36,7 @@ const testTensors = {
                   trainTensors.timeSec,
                   {epochs: 200});
                   })();
-//Evalua el modelo, utilizando la funcion de perdido,
+//Evalua el modelo, utilizando la funcion de perdida,
 //de esta forma, mientras mas cercana a 0, mejor
 model.evaluate(testTensors.sizeMB, testTensors.timeSec).print();
 
