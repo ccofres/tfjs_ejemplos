@@ -25,11 +25,10 @@
                     });
     }
 
-    const model = tf.sequential();
-    model.add(tf.layers.dense({units: 1, inputShape: [1]}));
-    model.compile({loss:'meanSquaredError', 
-                   optimizer:'sgd'});
-    model.summary();
+const model = tf.sequential();
+model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+model.compile({optimizer: 'sgd', loss: 'meanAbsoluteError'});
+model.summary();
 
 const trainData = {
   sizeMB:  [0.080, 9.000, 0.001, 0.100, 8.000, 5.000, 0.100, 6.000, 0.050, 0.500,
@@ -51,7 +50,8 @@ const bigFileMB = 100;
 const hugeFileMB = 10000;
     doTraining(model).then(() => {
         //alert(model.predict(tf.tensor2d([smallFileMB, bigFileMB, hugeFileMB], [3,1])));
-        alert(model.predict(tf.tensor2d([[smallFileMB], [bigFileMB], [hugeFileMB]])));
+        //alert(model.predict(tf.tensor2d([[smallFileMB], [bigFileMB], [hugeFileMB]])));
+        model.predict(tf.tensor2d([[smallFileMB],[bigFileMB],[hugeFileMB]])).print();
         //modo flat-array de funcion tf.tensor2d()
         //([valor1,valor2],[shape])
     });
